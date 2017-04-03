@@ -1,5 +1,3 @@
-package safetymaintenance.parts;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -15,7 +13,7 @@ public class ReadXMLFile {
 
     try {
 
-	File fXmlFile = new File("../data/Assumption.xml");
+	File fXmlFile = new File("../../../data/Assumption.xml");
 	DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 	DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 	Document doc = dBuilder.parse(fXmlFile);
@@ -40,8 +38,8 @@ public class ReadXMLFile {
 
 			Element eElement = (Element) nNode;
 
-			System.out.println("ID : " + eElement.getAttribute("ID"));
-			System.out.println("Description : " + eElement.getAttribute("Description"));
+			System.out.println("ID : " + eElement.getElementsByTagName("ID").item(0).getTextContent());
+			System.out.println("Description : " + eElement.getElementsByTagName("Description").item(0).getTextContent());
 
 		}
 	}
