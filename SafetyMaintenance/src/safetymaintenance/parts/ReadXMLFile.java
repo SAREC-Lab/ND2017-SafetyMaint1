@@ -13,7 +13,7 @@ public class ReadXMLFile {
 
     try {
 
-	File fXmlFile = new File("../../../data/Assumption.xml");
+	File fXmlFile = new File("data/Assumption.xml");
 	DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 	DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 	Document doc = dBuilder.parse(fXmlFile);
