@@ -1,0 +1,224 @@
+<?xml version="1.0"?>
+<Requirements>
+
+<Requirement>
+<ID>R1</ID>
+<Description>A fleet of drones will be generated at simulation startup.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R2</ID>
+<Description>The system will either be in physical mode or virtual mode but never simultaneously in both.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R3</ID>
+<Description>When the system is in physical mode only physical drones will be used.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R4</ID>
+<Description>When the system is in virtual mode only virtual drones will be used.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R5</ID>
+<Description>The system will not switch modes at runtime.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R6</ID>
+<Description>Flight plans will be specified in XML</Description>
+</Requirement>
+
+<Requirement>
+<ID>R34</ID>
+<Description>Operator will select a flight plan to import</Description>
+</Requirement>
+
+<Requirement>
+<ID>R7</ID>
+<Description>Each flight plan will include a set of waypoints specified in terms of coordinates.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R11</ID>
+<Description>The bounds of the flight zone will be specified in terms of latitude and longitude coordinates.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R12</ID>
+<Description>Drones will only be displayed on central command screens if they are located within flight zone bounds.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R13</ID>
+<Description>A drone shall regularly transmit its current GPS coordinates to central command.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R14</ID>
+<Description>Central command will track the current coordinates of all drones in flight.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R15</ID>
+<Description>When a flight plan is assigned to a drone, the drone will fly to the targeted altitude of the starting location.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R16</ID>
+<Description>During the flight the drone travel from one waypoint to another as ordered by the flight plan.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R17</ID>
+<Description>Upon reaching the final waypoint the drone shall land.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R18</ID>
+<Description>A drone will always be in one of five flight modes:  grounded, awaitingTakeOff, taking-off, flying, or landing.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R19</ID>
+<Description>Minimum separation distance shall always be maintained between all drones.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R20</ID>
+<Description>A safety component shall direct the flight path of any drone which approaches the minimum separation distance of another drone.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R21</ID>
+<Description>When drones take-off from a shared location, their flight shall be staggered to prevent violation of minimum separation distance.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R22</ID>
+<Description>When two or more drones approach minimum separation distance violations will be avoided through forming an aerial roundabout.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R23</ID>
+<Description>Drones must maintain sufficient voltage to return to base.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R28</ID>
+<Description>The current status of each flight plan including its waypoints, dispatch status, and dispatch time shall be displayed on the screen.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R29</ID>
+<Description>Drones shall be represented visually as they move across the flight zone.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R30</ID>
+<Description>Coordinates shall be specified using longitude and latitude degrees compatible with Google maps.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R31</ID>
+<Description>Altitude shall be specified in meters.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R32</ID>
+<Description>Drones shall maintain a minimum separation distance of 3 meters between wingtips at all times.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R33</ID>
+<Description>Drones shall maintain a minimum separation distance of 3.5 meters between drone centers at all times.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R35</ID>
+<Description>A central flight manager will coordinate all drone launches</Description>
+</Requirement>
+
+<Requirement>
+<ID>R36</ID>
+<Description>Bases will be shown on the display.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R37</ID>
+<Description>Each drone shall be assigned to a unique home base.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R40</ID>
+<Description>While the system is in virtual mode, the system shall dynamically create drone bases within the bounds of the flight zone.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R41</ID>
+<Description>Bases shall not physically overlap other bases.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R42</ID>
+<Description>While the system is in physical mode, an operator will place each drone physically at its launch location.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R43</ID>
+<Description>While the system is in physical mode, the home base of each drone shall be assigned according to its initial position in the zone.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R38</ID>
+<Description>Drones shall return to their unique home base following each flight.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R39</ID>
+<Description>Drones shall land at their home base following each flight.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R45</ID>
+<Description>The current voltage of each drone shall be tracked.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R46</ID>
+<Description>The user shall interactively create a flight plan for a single drone.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R49</ID>
+<Description>When a user interactively defines a flight plan, only waypoints within the current flight zone may be selected.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R47</ID>
+<Description>Flight plans created interactively must be saved to standard XML format prior to their use.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R48</ID>
+<Description>When a user is interactively defining a flight plan, the waypoints shall be numbered consecutively.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R49</ID>
+<Description>Show flight zone bounds on the virtual display</Description>
+</Requirement>
+
+<Requirement>
+<ID>R50</ID>
+<Description>Location descriptions must always be displayed in degrees longitude and latitude.</Description>
+</Requirement>
+
+<Requirement>
+<ID>R51</ID>
+<Description>When the user interactively defines a waypoint, its longitude and latitude shall be displayed.</Description>
+</Requirement>
+
+</Requirements>
