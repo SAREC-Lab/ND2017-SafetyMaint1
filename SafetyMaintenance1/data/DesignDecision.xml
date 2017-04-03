@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<DesignDecisions>
+
+<DesignDecision>
+<ID>D1</ID>
+<Description>Roundabout algorithm for safety diversion is currently implemented for two drones only.</Description>
+</DesignDecision>
+
+<DesignDecision>
+<ID>D2</ID>
+<Description>Simulation state (i.e. virtual or physical) is set in a singleton class and can only be set once.</Description>
+</DesignDecision>
+
+<DesignDecision>
+<ID>D3</ID>
+<Description>Flight simulation for virtual drones is managed entirely by the virtual drone.  There is no central drone simulation component.</Description>
+</DesignDecision>
+
+<DesignDecision>
+<ID>D4</ID>
+<Description>All coordinates are specified in degrees for easy interface with MavLink and GoogleMaps</Description>
+</DesignDecision>
+
+<DesignDecision>
+<ID>D5</ID>
+<Description>RTK will be used to increase drone accuracy to within 8 cm.</Description>
+</DesignDecision>
+
+</DesignDecisions>
