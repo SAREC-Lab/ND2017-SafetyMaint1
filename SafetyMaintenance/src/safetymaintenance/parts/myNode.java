@@ -1,18 +1,33 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Node {
+public class myNode {
 
-	private String type = null;
-	private String description = null;
-	private String criticality = null;
-	private List<Node> connections = new ArrayList<Node>();
+	private String type;
+	private String ID;
+	private String description;
+	private String criticality;
+	private List<myNode> connections;
+	
+	public myNode(){
+		type = null;
+		ID = null;
+		description = null;
+		criticality = null;
+		connections = new ArrayList<myNode>();
+	}
 	
 	public void setType(String t){
 		type = t;
 	}
 	public String getType(){
 		return type;
+	}
+	public void setID(String i){
+		ID = i;
+	}
+	public String getID(){
+		return ID;
 	}
 	public void setDescription(String d){
 		description = d;

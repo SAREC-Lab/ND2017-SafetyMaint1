@@ -20,6 +20,9 @@ public class ReadXMLFile {
 	fileNames.add("Goal");
 	fileNames.add("Requirement");
 	
+	List<myNode> allNodes = new ArrayList<myNode>();
+
+	
     try {
     	for(int i=0; i<fileNames.size(); i++){
 		    File fXmlFile = new File("data/" + fileNames.get(i) + ".xml");
@@ -31,34 +34,48 @@ public class ReadXMLFile {
 			//read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
 			doc.getDocumentElement().normalize();
 		
-			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+			//System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 		
 			NodeList nList = doc.getElementsByTagName(fileNames.get(i));
 		
-			System.out.println("----------------------------");
+			//System.out.println("----------------------------");
 		
 			for (int temp = 0; temp < nList.getLength(); temp++) {
 		
 				Node nNode = nList.item(temp);
+				
+				myNode currentNode = new myNode();
 		
-				System.out.println("\nCurrent Element : " + nNode.getNodeName());
-		
+				//System.out.println("\nCurrent Element : " + nNode.getNodeName());
+				currentNode.setType(nNode.getNodeName());
+				
 				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 		
 					Element eElement = (Element) nNode;
 		
-					System.out.println("ID : " + eElement.getElementsByTagName("ID").item(0).getTextContent());
-					System.out.println("Description : " + eElement.getElementsByTagName("Description").item(0).getTextContent());
+					currentNode.setID(eElement.getElementsByTagName("ID").item(0).getTextContent());
+					currentNode.setDescription(eElement.getElementsByTagName("Description").item(0).getTextContent());
+					//System.out.println("ID : " + eElement.getElementsByTagName("ID").item(0).getTextContent());
+					//System.out.println("Description : " + eElement.getElementsByTagName("Description").item(0).getTextContent());
 					if(fileNames.get(i) == "FMECA"){
-						System.out.println("Criticality : " + eElement.getElementsByTagName("Criticality").item(0).getTextContent());
+						currentNode.setCriticality(eElement.getElementsByTagName("Criticality").item(0).getTextContent());
+						//System.out.println("Criticality : " + eElement.getElementsByTagName("Criticality").item(0).getTextContent());
 					}
 		
 				}
+				allNodes.add(currentNode);
 			}
+			
     	}
     } catch (Exception e) {
     	e.printStackTrace();
     }
+
+    for(myNode i:allNodes){
+    	System.out.println("Node: " + i.getID());
+    }
+  
+  
   }
 
 }
