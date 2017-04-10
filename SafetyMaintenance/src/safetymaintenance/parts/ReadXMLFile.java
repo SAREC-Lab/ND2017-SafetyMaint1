@@ -21,10 +21,10 @@ public class ReadXMLFile {
 	xmlFileNames.add("Requirement");
 
 	List<String> tmFileNames = new ArrayList<String>();
-	tmFileNames.add("Code_Requirements");   //TMReqCode
-	tmFileNames.add("Requirements_Assumptions"); //TMAssumption
-	tmFileNames.add("Requirements_Design"); //TMDesign
-	tmFileNames.add("Requirements_Fault"); //TMFault
+	tmFileNames.add("Code_Requirements");
+	tmFileNames.add("Requirements_Assumptions");
+	tmFileNames.add("Requirements_Design");
+	tmFileNames.add("Requirements_Fault");
 	
 	List<String> tmTagNames = new ArrayList<String>();
 	tmTagNames.add("TMReqCode");
@@ -45,35 +45,27 @@ public class ReadXMLFile {
 			//read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
 			doc.getDocumentElement().normalize();
 		
-			//System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
-		
 			NodeList nList = doc.getElementsByTagName(xmlFileNames.get(i));
-		
-			//System.out.println("----------------------------");
-		
+				
 			for (int temp = 0; temp < nList.getLength(); temp++) {
 		
 				Node nNode = nList.item(temp);
-				
-				myNode currentNode = new myNode();
-		
-				//System.out.println("\nCurrent Element : " + nNode.getNodeName());
-				currentNode.setType(nNode.getNodeName());
+
+				String type = null, id = null, desc = null, crit = null;
 				
 				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 		
 					Element eElement = (Element) nNode;
 		
-					currentNode.setID(eElement.getElementsByTagName("ID").item(0).getTextContent());
-					currentNode.setDescription(eElement.getElementsByTagName("Description").item(0).getTextContent());
-					//System.out.println("ID : " + eElement.getElementsByTagName("ID").item(0).getTextContent());
-					//System.out.println("Description : " + eElement.getElementsByTagName("Description").item(0).getTextContent());
+					type = nNode.getNodeName();
+					id = eElement.getElementsByTagName("ID").item(0).getTextContent();
+					desc = eElement.getElementsByTagName("Description").item(0).getTextContent();
+
 					if(xmlFileNames.get(i) == "FMECA"){
-						currentNode.setCriticality(eElement.getElementsByTagName("Criticality").item(0).getTextContent());
-						//System.out.println("Criticality : " + eElement.getElementsByTagName("Criticality").item(0).getTextContent());
+						crit = eElement.getElementsByTagName("Criticality").item(0).getTextContent();
 					}
-		
 				}
+				myNode currentNode = new myNode(type, id, desc, crit);
 				allNodes.add(currentNode);
 			}
 			

@@ -7,30 +7,19 @@ public class myNode {
 	private String ID;
 	private String description;
 	private String criticality;
-	private List<myNode> connections;
-	
-	public myNode(){
-		type = null;
-		ID = null;
-		description = null;
-		criticality = null;
-		connections = new ArrayList<myNode>();
-	}
-	
-	public void setType(String t){
+
+	public myNode(String t, String i, String d, String c){
 		type = t;
+		ID = i;
+		description = d;
+		criticality = c;
 	}
+	
 	public String getType(){
 		return type;
 	}
-	public void setID(String i){
-		ID = i;
-	}
 	public String getID(){
 		return ID;
-	}
-	public void setDescription(String d){
-		description = d;
 	}
 	public String getDescription(){
 		return description;
