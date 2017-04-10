@@ -10,8 +10,51 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReadXMLFile {
+	
+  private List<myNode> allNodes;
+  private List<myConnection> allConnections;
+  
+  public List<myNode> getAssumptions() {
+	List<myNode> assumptions = new ArrayList<myNode>();
+    for(myNode i:allNodes){
+    	if(i.getType() == "Assumption") {
+    		assumptions.add(i);
+    	}
+    }
+	return assumptions;
+  }
+  
+  public List<myNode> getRequirements() {
+	List<myNode> reqs = new ArrayList<myNode>();
+    for(myNode i:allNodes){
+    	if(i.getType() == "Requirement") {
+    		reqs.add(i);
+    	}
+    }
+	return reqs;
+  }
+  
+  public List<myNode> getDesignDecisions() {
+	List<myNode> dds = new ArrayList<myNode>();
+    for(myNode i:allNodes){
+    	if(i.getType() == "DesignDecision") {
+    		dds.add(i);
+    	}
+    }
+	return dds;
+  }
+  
+  public List<myNode> getFMECAs() {
+	List<myNode> faults = new ArrayList<myNode>();
+    for(myNode i:allNodes){
+    	if(i.getType() == "FMECA") {
+    		faults.add(i);
+    	}
+    }
+	return faults;
+  }
 
-  public static void main(String argv[]) {
+  public void parseNodes() {
 
 	List<String> xmlFileNames = new ArrayList<String>();
 	xmlFileNames.add("Assumption");
@@ -20,19 +63,7 @@ public class ReadXMLFile {
 	xmlFileNames.add("Goal");
 	xmlFileNames.add("Requirement");
 
-	List<String> tmFileNames = new ArrayList<String>();
-	tmFileNames.add("Code_Requirements");
-	tmFileNames.add("Requirements_Assumptions");
-	tmFileNames.add("Requirements_Design");
-	tmFileNames.add("Requirements_Fault");
-	
-	List<String> tmTagNames = new ArrayList<String>();
-	tmTagNames.add("TMReqCode");
-	tmTagNames.add("TMAssumption");
-	tmTagNames.add("TMDesign");
-	tmTagNames.add("TMFault");
-	
-	List<myNode> allNodes = new ArrayList<myNode>();
+	allNodes = new ArrayList<myNode>();
 	
     try {
     	for(int i=0; i<xmlFileNames.size(); i++){
@@ -78,6 +109,23 @@ public class ReadXMLFile {
     	System.out.println("Node: " + i.getID());
     }
   
+  } 
+public void parseLinks() {
+	
+	allConnections = new ArrayList<myConnection>();
+	
+	List<String> tmFileNames = new ArrayList<String>();
+	tmFileNames.add("Code_Requirements");
+	tmFileNames.add("Requirements_Assumptions");
+	tmFileNames.add("Requirements_Design");
+	tmFileNames.add("Requirements_Fault");
+	
+	List<String> tmTagNames = new ArrayList<String>();
+	tmTagNames.add("TMReqCode");
+	tmTagNames.add("TMAssumption");
+	tmTagNames.add("TMDesign");
+	tmTagNames.add("TMFault");
+	
     try {    	
     	for(int i=0; i<tmFileNames.size(); i++){
 		    File fXmlFile = new File("data/TM_" + tmFileNames.get(i) + ".xml");
@@ -96,9 +144,29 @@ public class ReadXMLFile {
 				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 		
 					Element eElement = (Element) nNode;
+					
+					myNode src = null;
+					String src_id = eElement.getElementsByTagName("ID").item(0).getTextContent();
+					for(myNode n: allNodes) {
+						if(n.getID() == src_id) {
+							src = n;
+							break;
+						}
+					}
+					myNode dst = null;
+					String dst_id = eElement.getElementsByTagName("Description").item(0).getTextContent();
+					for(myNode n: allNodes) {
+						if(n.getID() == dst_id) {
+							dst = n;
+							break;
+						}
+					}
 		
-					System.out.println("ID : " + eElement.getElementsByTagName("ID").item(0).getTextContent());
-					System.out.println("Description : " + eElement.getElementsByTagName("Description").item(0).getTextContent());
+					myConnection tmp = new myConnection(src, dst);
+					allConnections.add(tmp);
+					
+					//System.out.println("ID : " + eElement.getElementsByTagName("ID").item(0).getTextContent());
+					//System.out.println("Description : " + eElement.getElementsByTagName("Description").item(0).getTextContent());
 					
 				}
 			}
