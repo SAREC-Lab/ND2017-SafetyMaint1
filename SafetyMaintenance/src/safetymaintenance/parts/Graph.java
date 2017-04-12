@@ -8,6 +8,7 @@ public class Graph {
 	
 	private static Map<String, myNode> nodes = new HashMap<String, myNode>();
 	private static Map<String, ArrayList<String>> edges = new HashMap<String, ArrayList<String>>();
+	private static Set<String> classes = new HashSet<String>();
 	private static Set<String> criticalClasses = new HashSet<String>();
 	
 	private static XMLReader xmlReader = new XMLReader();
@@ -27,7 +28,7 @@ public class Graph {
 	}
 	
 	public void traverseGraphFrom(String sourceCode) {
-		if(criticalClasses.contains(sourceCode)) {
+		if(classes.contains(sourceCode)) {
 			System.out.println(sourceCode);
 			traverseGraph(sourceCode, "");
 		} else {
@@ -58,11 +59,42 @@ public class Graph {
 			System.out.println("Critical Class: " + critical);
 		}
 	}
+	
+	public void readClasses() {
+		for(String c: classes) {
+			System.out.println("Class: " + c);
+		}
+	}
+
+	private boolean isCritical(String src) {
+		ArrayList<String> requirements = edges.get(src);
+		for(String r : requirements) {
+			//System.out.println("Checking requirement: " + r);
+			if(!edges.containsKey(r)) continue;
+			for (String f : edges.get(r)) {
+				//System.out.println("Checking link: " + f);
+				if(f.contains("F")) return true;
+			}
+		}
+		return false;
+	}
+	
+	public void determineCriticalClasses() {
+		for(String src : classes) {
+			if(isCritical(src)) {
+				criticalClasses.add(src);
+			}
+		}
+	}
+	public Set<String> getCriticalClasses() {
+		return criticalClasses;
+	}
 
 	private void buildGraph() {
 		nodes = xmlReader.readNodes();
 		edges = xmlReader.readEdges();
-		criticalClasses = xmlReader.getCriticalClasses();
+		classes = xmlReader.getClasses();
+		determineCriticalClasses();
 	}
 	
 	

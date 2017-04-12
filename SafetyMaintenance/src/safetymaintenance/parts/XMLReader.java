@@ -144,7 +144,7 @@ public class XMLReader {
 
 	}
 
-	public Set<String> getCriticalClasses() {
+	public Set<String> getClasses() {
 		Set<String> critical = new HashSet<String>();
 		
 		try {    	
@@ -166,6 +166,7 @@ public class XMLReader {
 					Element eElement = (Element) nNode;
 
 					String src_id = eElement.getElementsByTagName("ID").item(0).getTextContent();
+					
 					critical.add(src_id);
 				}
 			}
