@@ -143,8 +143,8 @@ public class XMLReader {
 		return edges;
 
 	}
-	
-	private Set<String> readClassFile() {
+
+	public Set<String> getCriticalClasses() {
 		Set<String> critical = new HashSet<String>();
 		
 		try {    	
@@ -174,10 +174,6 @@ public class XMLReader {
 		}
 		
 		return critical;
-	}
-
-	public Set<String> getCriticalClasses() {
-		return readClassFile();
 	}
 
 }
