@@ -107,6 +107,11 @@
 </Requirement>
 
 <Requirement>
+<ID>R26</ID>
+<Description>Temp node that doesn't exist but should.</Description>
+</Requirement>
+
+<Requirement>
 <ID>R28</ID>
 <Description>The current status of each flight plan including its waypoints, dispatch status, and dispatch time shall be displayed on the screen.</Description>
 </Requirement>
