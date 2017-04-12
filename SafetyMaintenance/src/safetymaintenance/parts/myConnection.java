@@ -14,5 +14,11 @@ public class myConnection {
 	public myNode getDestination(){
 		return destination;
 	}
+	public String getSourceID() {
+		return source.getID();
+	}
+	public String getDestinationID() {
+		return destination.getID();
+	}
 	
 }

@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.List;
 
 public class myNode {
 
@@ -31,8 +29,7 @@ public class myNode {
 		return criticality;
 	}	
 	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+	public String toString() {
+		return ID + ": " + description;
 	}
 }
