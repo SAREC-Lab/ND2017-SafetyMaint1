@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class Graph {
+public class GraphClass {
 	
 	private static Map<String, myNode> nodes = new HashMap<String, myNode>();
 	private static Map<String, ArrayList<String>> edges = new HashMap<String, ArrayList<String>>();
@@ -13,7 +13,7 @@ public class Graph {
 	
 	private static XMLReader xmlReader = new XMLReader();
 	
-	public Graph() {
+	public GraphClass() {
 		buildGraph();
 	}
 	

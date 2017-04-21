@@ -1,7 +1,8 @@
 
 public class Main {
 
-	private static Graph graph = new Graph();
+	private static GraphClass graph = new GraphClass();
+	private static View visualGraph = new View();
 	
 	public static void main(String[] args) {
 		for(String source: graph.getCriticalClasses()) {
@@ -9,5 +10,6 @@ public class Main {
 		}
 		//graph.readClasses();
 		//graph.readCriticalClasses();
+		visualGraph.createPartControl(null);
 	}
 }

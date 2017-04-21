@@ -18,23 +18,26 @@ import org.eclipse.swt.graphics.Color;
 
 public class View extends ViewPart {
         public static final String ID = "de.vogella.zest.first.view";
-        private Graph graph;
+        private Graph visualGraph;
         private int layout = 1;
         public Color codeColor = new Color(null,255,255,0); 
         public Color fmecaColor = new Color(null,255,0,0);
         public Color assumptColor = new Color(null,100,255,255);
         public Color desColor = new Color(null,255,153,51);
         public Color reqColor = new Color(null,204,153,255);
-
+        
+        private static GraphClass graph = new GraphClass();
+        
         public void createPartControl(Composite parent) {
                 // Graph will hold all other objects
-                graph = new Graph(parent, SWT.NONE);
+                visualGraph = new Graph(parent, SWT.NONE);
                 // now a few nodes
-                GraphNode node1 = new GraphNode(graph, SWT.NONE, "Code");
-                GraphNode node2 = new GraphNode(graph, SWT.NONE, "FMECA");
-                GraphNode node3 = new GraphNode(graph, SWT.NONE, "Assumption");
-                GraphNode node4 = new GraphNode(graph, SWT.NONE, "Design");
-                GraphNode node5 = new GraphNode(graph, SWT.NONE, "Requirement");
+                
+                GraphNode node1 = new GraphNode(visualGraph, SWT.NONE, "Code");
+                GraphNode node2 = new GraphNode(visualGraph, SWT.NONE, "FMECA");
+                GraphNode node3 = new GraphNode(visualGraph, SWT.NONE, "Assumption");
+                GraphNode node4 = new GraphNode(visualGraph, SWT.NONE, "Design");
+                GraphNode node5 = new GraphNode(visualGraph, SWT.NONE, "Requirement");
                 
                 node1.setBackgroundColor(codeColor);
                 node2.setBackgroundColor(fmecaColor);
@@ -54,7 +57,7 @@ public class View extends ViewPart {
                 graphNodes.add(node4);
                 
                 for (GraphNode g:graphNodes) {
-                	new GraphConnection(graph, SWT.NONE, node5, g);
+                	new GraphConnection(visualGraph, SWT.NONE, node5, g);
                 }
                 
                 // Lets have a directed connection
@@ -79,11 +82,11 @@ public class View extends ViewPart {
                  //               SWT.COLOR_RED));
                // graphConnection.setLineWidth(3);
 
-                graph.setLayoutAlgorithm(new SpringLayoutAlgorithm(
+                visualGraph.setLayoutAlgorithm(new SpringLayoutAlgorithm(
                                 LayoutStyles.NO_LAYOUT_NODE_RESIZING), true);
                 // Selection listener on graphConnect or GraphNode is not supported
                 // see https://bugs.eclipse.org/bugs/show_bug.cgi?id=236528
-                graph.addSelectionListener(new SelectionAdapter() {
+                visualGraph.addSelectionListener(new SelectionAdapter() {
                         @Override
                         public void widgetSelected(SelectionEvent e) {
                                 System.out.println(e);
@@ -95,12 +98,12 @@ public class View extends ViewPart {
         public void setLayoutManager() {
                 switch (layout) {
                 case 1:
-                        graph.setLayoutAlgorithm(new TreeLayoutAlgorithm(
+                        visualGraph.setLayoutAlgorithm(new TreeLayoutAlgorithm(
                                         LayoutStyles.NO_LAYOUT_NODE_RESIZING), true);
                         layout++;
                         break;
                 case 2:
-                        graph.setLayoutAlgorithm(new SpringLayoutAlgorithm(
+                        visualGraph.setLayoutAlgorithm(new SpringLayoutAlgorithm(
                                         LayoutStyles.NO_LAYOUT_NODE_RESIZING), true);
                         layout = 1;
                         break;
