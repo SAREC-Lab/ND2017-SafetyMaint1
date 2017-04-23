@@ -10,6 +10,10 @@ public class Main {
 		}
 		//graph.readClasses();
 		//graph.readCriticalClasses();
-		visualGraph.createPartControl(null);
+		//visualGraph.createVisualGraph();
+		
+		for (String source: graph.getCriticalClasses()) {
+			System.out.println(source);	
+		}
 	}
 }

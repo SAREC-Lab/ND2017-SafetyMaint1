@@ -28,6 +28,10 @@ public class View extends ViewPart {
         
         private static GraphClass graph = new GraphClass();
         
+        public void createVisualGraph() {
+        	createPartControl(visualGraph);
+        }
+        
         public void createPartControl(Composite parent) {
                 // Graph will hold all other objects
                 visualGraph = new Graph(parent, SWT.NONE);
@@ -44,6 +48,7 @@ public class View extends ViewPart {
                 node3.setBackgroundColor(assumptColor);
                 node4.setBackgroundColor(desColor);
                 node5.setBackgroundColor(reqColor);
+                
                 node1.setHighlightColor(new Color(null, 155,255, 204));
                 node2.setHighlightColor(new Color(null, 155,255, 204));
                 node3.setHighlightColor(new Color(null, 155,255, 204));
