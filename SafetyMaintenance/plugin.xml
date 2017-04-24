@@ -10,5 +10,14 @@
             uri="fragment.e4xmi">
       </fragment>
    </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="safetymaintenance.parts.View"
+            id="SafetyMaintenance.view1"
+            name="abc"
+            restorable="true">
+      </view>
+   </extension>
 
 </plugin>

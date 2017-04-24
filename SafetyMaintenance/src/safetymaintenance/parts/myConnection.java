@@ -1,3 +1,5 @@
+package safetymaintenance.parts;
+
 
 public class myConnection {
 	private myNode source;

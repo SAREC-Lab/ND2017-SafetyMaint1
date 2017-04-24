@@ -1,3 +1,5 @@
+package safetymaintenance.parts;
+
 
 
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;

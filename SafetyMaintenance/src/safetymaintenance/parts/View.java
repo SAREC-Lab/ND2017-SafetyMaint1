@@ -1,3 +1,5 @@
+package safetymaintenance.parts;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
@@ -45,13 +47,13 @@ public class View extends ViewPart {
         			System.out.println(source);	
         		}*/
         		
-                Set<String> cc = graph.getCriticalClasses();
+                /*Set<String> cc = graph.getCriticalClasses();
                 Iterator<String> it = cc.iterator();
-                String criticalClass = it.next();
+                //String criticalClass = it.next();
         		ArrayList<String> requirements = graph.getTraceLinksFrom(criticalClass);
-                
-        		GraphNode node1 = new GraphNode(visualGraph, SWT.NONE, criticalClass);
-        		GraphNode node2 = new GraphNode(visualGraph, SWT.NONE, requirements.get(0));
+                */
+        		GraphNode node1 = new GraphNode(visualGraph, SWT.NONE, "node1");
+        		GraphNode node2 = new GraphNode(visualGraph, SWT.NONE, "node2");
         		
                 ArrayList<GraphNode> graphNodes = new ArrayList<GraphNode>();
                 graphNodes.add(node1);
