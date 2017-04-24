@@ -88,6 +88,33 @@ public class GraphClass {
 		return false;
 	}
 	
+	public ArrayList<String> getRequirements(String src) {
+		ArrayList<String> requirements = edges.get(src);
+		return requirements;
+	}
+	
+	public ArrayList<String> getDesign(String requirement) {
+		ArrayList<String> design = new ArrayList<String>();
+			//if (!edges.containsKey(requirement)) continue;
+			for (String d:edges.get(requirement)) {
+				if (d.contains("D")) {
+					design.add(d);
+				}
+			}
+		return design;
+	}
+	
+	public ArrayList<String> getFMECA(String requirement) {
+		ArrayList<String> FMECA = new ArrayList<String>();
+			//if (!edges.containsKey(requirement)) continue;
+			for (String f:edges.get(requirement)) {
+				if (f.contains("F")) {
+					FMECA.add(f);
+				}
+			}
+		return FMECA;
+	}
+	
 	public void determineCriticalClasses() {
 		for(String src : classes) {
 			if(isCritical(src)) {
