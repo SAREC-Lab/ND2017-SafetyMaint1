@@ -1,5 +1,3 @@
-
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
@@ -19,7 +17,7 @@ import org.eclipse.zest.layouts.algorithms.TreeLayoutAlgorithm;
 import org.eclipse.swt.graphics.Color;
 
 public class View extends ViewPart {
-        public static final String ID = "de.vogella.zest.first.view";
+        public static final String ID = "Safety Maintenance View";
         private Graph visualGraph;
         private int layout = 1;
         public Color codeColor = new Color(null,255,255,0); 
