@@ -1,6 +1,8 @@
 
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Set;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -37,12 +39,42 @@ public class View extends ViewPart {
                 visualGraph = new Graph(parent, SWT.NONE);
                 // now a few nodes
                 
-                GraphNode node1 = new GraphNode(visualGraph, SWT.NONE, "Code");
+                for(String source: graph.getCriticalClasses()) {
+        			graph.traverseGraphFrom(source);
+        		}
+                
+        		/*for (String source: graph.getCriticalClasses()) {
+        			System.out.println(source);	
+        		}*/
+        		
+                Set<String> cc = graph.getCriticalClasses();
+                Iterator<String> it = cc.iterator();
+                String criticalClass = it.next();
+        		ArrayList<String> requirements = graph.getTraceLinksFrom(criticalClass);
+                
+        		GraphNode node1 = new GraphNode(visualGraph, SWT.NONE, criticalClass);
+        		GraphNode node2 = new GraphNode(visualGraph, SWT.NONE, requirements.get(0));
+        		
+                ArrayList<GraphNode> graphNodes = new ArrayList<GraphNode>();
+                graphNodes.add(node1);
+                graphNodes.add(node2);
+                
+                System.out.println("HELLLO");
+                new GraphConnection(visualGraph, SWT.NONE, node1, node2);
+                
+               /* 
+        		for (GraphNode g:graphNodes) {
+                  new GraphConnection(visualGraph, SWT.NONE, node1, g);
+                }*/
+        		
+        		
+               /* GraphNode node1 = new GraphNode(visualGraph, SWT.NONE, "Code");
                 GraphNode node2 = new GraphNode(visualGraph, SWT.NONE, "FMECA");
                 GraphNode node3 = new GraphNode(visualGraph, SWT.NONE, "Assumption");
                 GraphNode node4 = new GraphNode(visualGraph, SWT.NONE, "Design");
                 GraphNode node5 = new GraphNode(visualGraph, SWT.NONE, "Requirement");
                 
+               
                 node1.setBackgroundColor(codeColor);
                 node2.setBackgroundColor(fmecaColor);
                 node3.setBackgroundColor(assumptColor);
@@ -64,7 +96,7 @@ public class View extends ViewPart {
                 for (GraphNode g:graphNodes) {
                 	new GraphConnection(visualGraph, SWT.NONE, node5, g);
                 }
-                
+                */
                 // Lets have a directed connection
                 /*new GraphConnection(graph, ZestStyles.CONNECTIONS_DIRECTED, node1,
                                 node2);

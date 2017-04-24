@@ -27,6 +27,15 @@ public class GraphClass {
 		}
 	}
 	
+	public ArrayList<String> getTraceLinksFrom(String src) {
+		if(!edges.containsKey(src)) {
+			System.out.println("This node has no links");
+			return null;
+		}
+		return edges.get(src);
+	}
+	
+	
 	public void traverseGraphFrom(String sourceCode) {
 		if(classes.contains(sourceCode)) {
 			System.out.println(sourceCode);
