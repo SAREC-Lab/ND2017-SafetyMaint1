@@ -42,25 +42,34 @@ public class View extends ViewPart {
                 for(String source: graph.getCriticalClasses()) {
         			graph.traverseGraphFrom(source);
         		}
-                
-        		/*for (String source: graph.getCriticalClasses()) {
-        			System.out.println(source);	
-        		}*/
+         
         		
-                /*Set<String> cc = graph.getCriticalClasses();
+                Set<String> cc = graph.getCriticalClasses();
                 Iterator<String> it = cc.iterator();
-                //String criticalClass = it.next();
-        		ArrayList<String> requirements = graph.getTraceLinksFrom(criticalClass);
-                */
-        		GraphNode node1 = new GraphNode(visualGraph, SWT.NONE, "node1");
-        		GraphNode node2 = new GraphNode(visualGraph, SWT.NONE, "node2");
+                String criticalClass = it.next();
+                criticalClass = it.next();
+        		ArrayList<String> requirements = graph.getRequirements(criticalClass);
+        		ArrayList<String> designDecisions = graph.getDesign(requirements.get(0));
+        		ArrayList<String> fmecas = graph.getFMECA(requirements.get(0));
+        		ArrayList<String> assumptions = graph.getAssumptions(requirements.get(0));
         		
-                ArrayList<GraphNode> graphNodes = new ArrayList<GraphNode>();
-                graphNodes.add(node1);
-                graphNodes.add(node2);
                 
-                System.out.println("HELLLO");
-                new GraphConnection(visualGraph, SWT.NONE, node1, node2);
+        		GraphNode classNode = new GraphNode(visualGraph, SWT.NONE, criticalClass);
+        		GraphNode requirementNode = new GraphNode(visualGraph, SWT.NONE, requirements.get(0));
+        	
+                new GraphConnection(visualGraph, SWT.NONE, classNode, requirementNode);
+                for (int i=0; i<designDecisions.size(); i++) {
+                	GraphNode designNode = new GraphNode(visualGraph,SWT.NONE, designDecisions.get(0));
+                	new GraphConnection(visualGraph, SWT.NONE, requirementNode, designNode);
+                }
+                for (int i=0; i<fmecas.size(); i++) {
+                	GraphNode fmecaNode = new GraphNode(visualGraph,SWT.NONE, fmecas.get(0));
+                	new GraphConnection(visualGraph, SWT.NONE, requirementNode, fmecaNode);
+                }
+                
+                
+                
+                
                 
                /* 
         		for (GraphNode g:graphNodes) {

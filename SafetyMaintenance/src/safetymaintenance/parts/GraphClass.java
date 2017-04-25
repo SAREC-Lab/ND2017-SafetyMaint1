@@ -54,7 +54,7 @@ public class GraphClass {
 		indents += "\t";
 		for(String link: edges.get(id)) {
 			System.out.print(indents);
-			System.out.println(nodes.get(link).toString());
+			if (nodes.get(link) != null) System.out.println(nodes.get(link).toString());
 			traverseGraph(link, indents);
 		}
 	}
@@ -117,6 +117,16 @@ public class GraphClass {
 		return FMECA;
 	}
 	
+	public ArrayList<String> getAssumptions(String requirement) {
+		ArrayList<String> assumption = new ArrayList<String>();
+			//if (!edges.containsKey(requirement)) continue;
+			for (String a:edges.get(requirement)) {
+				if (a.contains("A")) {
+					assumption.add(a);
+				}
+			}
+		return assumption;
+	}
 	public void determineCriticalClasses() {
 		for(String src : classes) {
 			if(isCritical(src)) {

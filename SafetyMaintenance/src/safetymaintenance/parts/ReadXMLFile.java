@@ -70,6 +70,7 @@ public class ReadXMLFile {
     try {
     	for(int i=0; i<xmlFileNames.size(); i++){
 		    File fXmlFile = new File("data/" + xmlFileNames.get(i) + ".xml");
+		    System.out.println(fXmlFile);
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(fXmlFile);
