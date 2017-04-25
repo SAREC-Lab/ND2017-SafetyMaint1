@@ -32,9 +32,9 @@ public class Main {
 			System.out.println(f);
 		}
 		
-		/*for(String source: graph.getCriticalClasses()) {
+		for(String source: graph.getCriticalClasses()) {
 			graph.traverseGraphFrom(source);
-		}*/
+		}
 		
 		
 		/*for (String source: graph.getCriticalClasses()) {
