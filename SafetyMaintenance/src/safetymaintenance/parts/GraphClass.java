@@ -98,9 +98,11 @@ public class GraphClass {
 	public ArrayList<String> getDesign(String requirement) {
 		ArrayList<String> design = new ArrayList<String>();
 			//if (!edges.containsKey(requirement)) continue;
-			for (String d:edges.get(requirement)) {
-				if (d.contains("D")) {
-					design.add(d);
+			if (edges.get(requirement) != null) {
+				for (String d:edges.get(requirement)) {
+					if (d.contains("D")) {
+						design.add(d);
+					}
 				}
 			}
 		return design;
@@ -109,9 +111,11 @@ public class GraphClass {
 	public ArrayList<String> getFMECA(String requirement) {
 		ArrayList<String> FMECA = new ArrayList<String>();
 			//if (!edges.containsKey(requirement)) continue;
-			for (String f:edges.get(requirement)) {
-				if (f.contains("F")) {
-					FMECA.add(f);
+			if (edges.get(requirement) != null) {
+				for (String f:edges.get(requirement)) {
+					if (f.contains("F")) {
+						FMECA.add(f);
+					}
 				}
 			}
 		return FMECA;
@@ -120,13 +124,16 @@ public class GraphClass {
 	public ArrayList<String> getAssumptions(String requirement) {
 		ArrayList<String> assumption = new ArrayList<String>();
 			//if (!edges.containsKey(requirement)) continue;
+		if (edges.get(requirement) != null) {
 			for (String a:edges.get(requirement)) {
 				if (a.contains("A")) {
 					assumption.add(a);
 				}
 			}
+		}
 		return assumption;
 	}
+	
 	public void determineCriticalClasses() {
 		for(String src : classes) {
 			if(isCritical(src)) {

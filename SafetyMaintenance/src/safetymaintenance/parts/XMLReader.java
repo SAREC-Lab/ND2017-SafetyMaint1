@@ -24,7 +24,6 @@ public class XMLReader {
 
 	private void readNodeFile(String fileName) {
 		File fXmlFile = new File("data/" + fileName + ".xml");
-		System.out.println(fXmlFile);
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		Document doc;
 
@@ -50,14 +49,13 @@ public class XMLReader {
 			}
 
 		} catch (Exception e) {
-			//e.printStackTrace();
-			System.out.println("cannot find file");
+			e.printStackTrace();
 		}
 	}
 
 	private void readFMECAFile() {
 		File fXmlFile = new File("data/FMECA.xml");
-		System.out.println(fXmlFile);
+		//System.out.println(fXmlFile);
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		Document doc;
 
@@ -83,8 +81,7 @@ public class XMLReader {
 			}
 
 		} catch (Exception e) {
-			//e.printStackTrace();
-			System.out.println("cannot find file");
+			e.printStackTrace();
 		}
 	}
 
@@ -103,7 +100,7 @@ public class XMLReader {
 	private void readEdgeFile(String fileName, String tagName) {
 		try {    	
 			File fXmlFile = new File("data/TM_" + fileName + ".xml");
-			System.out.println(fXmlFile);
+			//System.out.println(fXmlFile);
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(fXmlFile);
@@ -136,8 +133,7 @@ public class XMLReader {
 				}
 			}
 		} catch (Exception e) {
-			//e.printStackTrace();
-			System.out.println("cannot find file");
+			e.printStackTrace();
 		}
 	}
 
@@ -157,7 +153,7 @@ public class XMLReader {
 		
 		try {    	
 			File fXmlFile = new File("data/TM_Code_Requirements.xml");
-			System.out.println(fXmlFile);
+			//System.out.println(fXmlFile);
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(fXmlFile);
@@ -181,7 +177,6 @@ public class XMLReader {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("cannot find file");
 		}
 		
 		return critical;
