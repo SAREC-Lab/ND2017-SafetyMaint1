@@ -39,7 +39,7 @@ public class GraphView extends ViewPart {
                 visualGraph = new Graph(parent, SWT.NONE);
                 // now a few nodes
                 
-                // Get critical classes
+                // Get critical classses
                 for(String source: graph.getCriticalClasses()) {
         			graph.traverseGraphFrom(source);
         		}
@@ -50,6 +50,7 @@ public class GraphView extends ViewPart {
                 for (int i=0; i<10; i++) {
                 	criticalClass = it.next();
                 }
+                criticalClass = it.next();
                 
                 // Get requirements for specified critical class
         		ArrayList<String> requirements = graph.getRequirements(criticalClass);
@@ -114,13 +115,14 @@ public class GraphView extends ViewPart {
                 visualGraph.setLayoutAlgorithm(new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING), true);
                 // Selection listener on graphConnect or GraphNode is not supported
                 // see https://bugs.eclipse.org/bugs/show_bug.cgi?id=236528
-              /*  visualGraph.addSelectionListener(new SelectionAdapter() {
+                visualGraph.addSelectionListener(new SelectionAdapter() {
                         @Override
                         public void widgetSelected(SelectionEvent e) {
-                                System.out.println(e);
+                                System.out.println(e.getClass().getName());
+                                
                         }
 
-                });*/
+                });
         }
         /**
          * Passing the focus request to the viewer's control.
