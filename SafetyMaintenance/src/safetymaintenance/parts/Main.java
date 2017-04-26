@@ -7,7 +7,8 @@ import java.util.Set;
 public class Main {
 
 	private static GraphClass graph = new GraphClass();
-	private static View visualGraph = new View();
+	private static GraphView visualGraph = new GraphView();
+	private static NodeInfoView infoView = new NodeInfoView();
 	
 	public static void main(String[] args) {
 	

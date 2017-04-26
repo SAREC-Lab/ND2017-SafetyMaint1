@@ -13,9 +13,15 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            class="safetymaintenance.parts.View"
+            class="safetymaintenance.parts.GraphView"
             id="SafetyMaintenance.view1"
-            name="abc"
+            name="GraphView"
+            restorable="true">
+      </view>
+       <view
+            class="safetymaintenance.parts.NodeInfoView"
+            id="SafetyMaintenance.view2"
+            name="NodeInfoView"
             restorable="true">
       </view>
    </extension>

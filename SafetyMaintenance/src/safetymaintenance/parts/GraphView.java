@@ -18,9 +18,9 @@ import org.eclipse.zest.layouts.algorithms.SpringLayoutAlgorithm;
 import org.eclipse.zest.layouts.algorithms.TreeLayoutAlgorithm;
 import org.eclipse.swt.graphics.Color;
 
-public class View extends ViewPart {
+public class GraphView extends ViewPart {
         public static final String ID = "Safety Maintenance View";
-        private Graph visualGraph;
+        public static Graph visualGraph;
         private int layout = 1;
         public Color codeColor = new Color(null,155,255, 204); 
         public Color fmecaColor = new Color(null,255,145,160);
@@ -114,13 +114,13 @@ public class View extends ViewPart {
                 visualGraph.setLayoutAlgorithm(new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING), true);
                 // Selection listener on graphConnect or GraphNode is not supported
                 // see https://bugs.eclipse.org/bugs/show_bug.cgi?id=236528
-                visualGraph.addSelectionListener(new SelectionAdapter() {
+              /*  visualGraph.addSelectionListener(new SelectionAdapter() {
                         @Override
                         public void widgetSelected(SelectionEvent e) {
                                 System.out.println(e);
                         }
 
-                });
+                });*/
         }
         /**
          * Passing the focus request to the viewer's control.
