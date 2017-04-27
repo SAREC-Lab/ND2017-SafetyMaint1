@@ -17,8 +17,8 @@ public class NodeInfoView extends ViewPart {
 	@Override
 	public void createPartControl(Composite parent) {
 		// TODO Auto-generated method stub
-		label = new Label(parent, 0);
-    	label.setText("HEY");
+		//label = new Label(parent, 0);
+    	//label.setText("HEY");
 		
 		
 		graph.addSelectionListener(new SelectionAdapter() {
@@ -27,8 +27,8 @@ public class NodeInfoView extends ViewPart {
             public void widgetSelected(SelectionEvent e) {
             	//System.out.println(e);
             	//Text text = new Text(parent, SWT.BORDER);
-            	//label = new Label(parent, 0);
-            	//label.setText("HEY");
+            	label = new Label(parent, 0);
+            	label.setText("HEY");
             }
     });
 	}

@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.Label;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.zest.core.widgets.Graph;
 import org.eclipse.zest.core.widgets.GraphConnection;
@@ -50,7 +53,7 @@ public class GraphView extends ViewPart {
                 for (int i=0; i<10; i++) {
                 	criticalClass = it.next();
                 }
-                criticalClass = it.next();
+                //criticalClass = it.next();
                 
                 // Get requirements for specified critical class
         		ArrayList<String> requirements = graph.getRequirements(criticalClass);
@@ -62,19 +65,33 @@ public class GraphView extends ViewPart {
         		
         		// Traverse class to connect requirements, design decisions, fmeca, and assumptions
         		for (int i=0; i<requirements.size(); i++) {
-	        		GraphNode requirementNode = new GraphNode(visualGraph, SWT.NONE, requirements.get(i));
+	        		// Set requirement node
+        			String reqDescription = graph.getRequirementDescription(requirements.get(i));
+        		
+        			GraphNode requirementNode = new GraphNode(visualGraph, SWT.NONE, requirements.get(i));
 	        	    requirementNode.setBackgroundColor(reqColor);
 	                requirementNode.setHighlightColor(new Color(null,255,255,90));
-	        		
+	                
+	                // Node hover
+	                IFigure requirementHover = new Label(reqDescription);
+	        		requirementNode.setTooltip(requirementHover);
+	                
 	        		ArrayList<String> designDecisions = graph.getDesign(requirements.get(i));
 	        		ArrayList<String> fmecas = graph.getFMECA(requirements.get(i));
 	        		ArrayList<String> assumptions = graph.getAssumptions(requirements.get(i));
 	        		
 	                new GraphConnection(visualGraph, SWT.NONE, classNode, requirementNode);
 	                for (int j=0; j<designDecisions.size(); j++) {
+	        			String desDescription = graph.getDesDescription(designDecisions.get(j));
+	        			System.out.println(designDecisions.get(j));
+	        			
 	                	GraphNode designNode = new GraphNode(visualGraph,SWT.NONE, designDecisions.get(j));
 	                	designNode.setBackgroundColor(desColor);
 	                	designNode.setHighlightColor(new Color(null,255,255,90));
+		                // Node hover
+		                IFigure designHover = new Label(desDescription);
+		        		designNode.setTooltip(designHover);
+	                	
 	                	new GraphConnection(visualGraph, SWT.NONE, requirementNode, designNode);    
 	                }
 	                for (int k=0; k<fmecas.size(); k++) {

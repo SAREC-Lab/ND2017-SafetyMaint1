@@ -58,6 +58,23 @@ public class GraphClass {
 			traverseGraph(link, indents);
 		}
 	}
+	
+	public String getRequirementDescription(String id) {
+		if(!edges.containsKey(id)) return "No Description";
+		for(String link: edges.get(id)) {
+			if (nodes.get(link) != null) return nodes.get(id).toString();
+		}
+		return "No Description";
+	}
+	
+	public String getDesDescription(String id) {
+		if(!edges.containsKey(id)) return "No Description";
+		for(String link: edges.get(id)) {
+			if (nodes.get(link) != null) return nodes.get(id).toString();
+		}
+		return "No Description";
+		
+	}
 
 	public void readNodes() {
 		for(String id: nodes.keySet()) {
