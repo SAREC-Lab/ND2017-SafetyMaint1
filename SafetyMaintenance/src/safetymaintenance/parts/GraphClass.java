@@ -70,7 +70,7 @@ public class GraphClass {
 	public String getDesDescription(String id) {
 		if(!edges.containsKey(id)) return "No Description";
 		for(String link: edges.get(id)) {
-			if (nodes.get(link) != null) return nodes.get(id).toString();
+			if (nodes.get(link) != null) return nodes.get(link).toString();
 		}
 		return "No Description";
 		
