@@ -28,17 +28,8 @@ public class NodeInfoView extends ViewPart {
             public void widgetSelected(SelectionEvent e) {
 				String id = e.item.toString().substring(16);
 				String newID = "";
-				//System.out.println(id);
-            	//System.out.println(e);
-            	if (id.startsWith("R", 0)) {
-					newID = graphClass.getRequirementDescription(id);
-            	}
-            	else { // STUCK HERE
-            		
-            	}
-            	//System.out.println(rID);
-            	label.setText(newID);
-          
+            	String descrip = graphClass.nodes.get(id).getDescription();
+            	label.setText(id + ": " + descrip);
             }
     });
 	}

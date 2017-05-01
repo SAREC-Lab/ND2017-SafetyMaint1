@@ -8,7 +8,7 @@ import java.util.Set;
 
 public class GraphClass {
 	
-	private static Map<String, myNode> nodes = new HashMap<String, myNode>();
+	public static Map<String, myNode> nodes = new HashMap<String, myNode>();
 	private static Map<String, ArrayList<String>> edges = new HashMap<String, ArrayList<String>>();
 	private static Set<String> classes = new HashSet<String>();
 	private static Set<String> criticalClasses = new HashSet<String>();
