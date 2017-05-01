@@ -20,8 +20,14 @@ import org.eclipse.zest.core.widgets.GraphConnection;
 import org.eclipse.zest.core.widgets.GraphNode;
 import org.eclipse.zest.core.widgets.ZestStyles;
 import org.eclipse.zest.layouts.LayoutStyles;
+import org.eclipse.zest.layouts.algorithms.AbstractLayoutAlgorithm;
+import org.eclipse.zest.layouts.algorithms.DirectedGraphLayoutAlgorithm;
+import org.eclipse.zest.layouts.algorithms.GridLayoutAlgorithm;
+import org.eclipse.zest.layouts.algorithms.HorizontalShift;
+import org.eclipse.zest.layouts.algorithms.HorizontalTreeLayoutAlgorithm;
 import org.eclipse.zest.layouts.algorithms.SpringLayoutAlgorithm;
 import org.eclipse.zest.layouts.algorithms.TreeLayoutAlgorithm;
+import org.eclipse.zest.layouts.algorithms.VerticalLayoutAlgorithm;
 import org.eclipse.swt.graphics.Color;
 
 public class GraphView extends ViewPart {
@@ -33,17 +39,23 @@ public class GraphView extends ViewPart {
         public Color assumptColor = new Color(null,100,255,255);
         public Color desColor = new Color(null,255,153,51);
         public Color reqColor = new Color(null,204,153,255);
-        
-        private static GraphClass graph = new GraphClass();
+        public Color criticalGreen = new Color(null, 49, 250, 0);
+        public Color criticalYellow = new Color(null, 255, 255, 0);
+        public Color criticalOrange = new Color(null, 255, 153, 0);
+        public Color criticalRed = new Color(null, 255, 92, 51);
+
+        public static GraphClass graph = new GraphClass();
         
         public void createVisualGraph() {
         	createPartControl(visualGraph);
         }
+       
         
         public void createPartControl(Composite parent) {
                 // Graph will hold all other objects
                 visualGraph = new Graph(parent, SWT.NONE);
-                // now a few nodes
+
+                int maxCritical = 0;
                 
                 // Get critical classses
                 for(String source: graph.getCriticalClasses()) {
@@ -62,12 +74,14 @@ public class GraphView extends ViewPart {
         		ArrayList<String> requirements = graph.getRequirements(criticalClass);
         		Set<String> otherArtifacts = new HashSet<String>();
         		Map<String, GraphNode> otherArtifactNodes = new HashMap<String, GraphNode>();
-        		
+
         		// Set class node
         		GraphNode classNode = new GraphNode(visualGraph, SWT.NONE, criticalClass);
         		classNode.setBackgroundColor(codeColor);
         		classNode.setHighlightColor(new Color(null, 255,255,90));
-        		
+
+            	int criticalNum = 0;
+
         		// Traverse class to connect requirements, design decisions, fmeca, and assumptions
         		for (int i=0; i<requirements.size(); i++) {
 	        		// Set requirement node
@@ -105,6 +119,7 @@ public class GraphView extends ViewPart {
 	                	
 	                	new GraphConnection(visualGraph, SWT.NONE, requirementNode, designNode);    
 	                }
+	                
 	                for (int k=0; k<fmecas.size(); k++) {
 	        			String fmecaDescription = graph.getFmecaDescription(requirements.get(i), fmecas.get(k));      
 	                	GraphNode fmecaNode;
@@ -122,7 +137,22 @@ public class GraphView extends ViewPart {
 		        		fmecaNode.setTooltip(fmecaHover);
 	                	new GraphConnection(visualGraph, SWT.NONE, requirementNode, fmecaNode);
 
+	               		// Set critical node
+	                	String criticality = graph.nodes.get(fmecas.get(k)).getCriticality();
+	                	System.out.println(criticality);
+	                	
+	            		if (criticality.equals("Critical")) {     
+	            			criticalNum = 3;
+	            		}
+	       
+	            		else if (criticality.equals("Medium Critical") && criticalNum < 2){
+	            			criticalNum = 2;
+	            		}
+	            		else if (criticality.equals("Medium") && criticalNum < 1) {
+	            			criticalNum = 1;
+	            		}	
 	                }
+	                
 	                for (int l=0; l<assumptions.size(); l++) {
 	        			String assumpDescription = graph.getAssumpDescription(requirements.get(i), assumptions.get(l)); 
 	        			GraphNode assumptionNode;
@@ -141,32 +171,32 @@ public class GraphView extends ViewPart {
 	                	new GraphConnection(visualGraph, SWT.NONE, requirementNode, assumptionNode);
 
 	                }
+	                
+	              
         		}
-                
-                // Lets have a directed connection
-                /*new GraphConnection(graph, ZestStyles.CONNECTIONS_DIRECTED, node1,
-                                node2);
-                // Lets have a dotted graph connection
-                new GraphConnection(graph, ZestStyles.CONNECTIONS_DOT, node2, node3);
-                // Standard connection
-
-                
-                new GraphConnection(graph, SWT.NONE, node3, node1);
-                new GraphConnection(graph, SWT.NONE, node4, node5);
-                // Change line color and line width
-                GraphConnection graphConnection = new GraphConnection(graph, SWT.NONE,
-                                node1, node4);
-                graphConnection.changeLineColor(parent.getDisplay().getSystemColor(
-                                SWT.COLOR_GREEN));*/
-                // Also set a text
-               // graphConnection.setText("This is a text");
-                //graphConnection.setHighlightColor(parent.getDisplay().getSystemColor(
-                 //               SWT.COLOR_RED));
-               // graphConnection.setLineWidth(3);
+        		if (criticalNum == 3) {     
+        			GraphNode criticalityNode = new GraphNode(visualGraph, SWT.NONE, "Critical");
+        			criticalityNode.setBackgroundColor(criticalRed);
+        		}
+            	else if (criticalNum == 2){
+        			GraphNode criticalityNode = new GraphNode(visualGraph, SWT.NONE, "Medium Critical");
+        			criticalityNode.setBackgroundColor(criticalOrange);
+        		}
+        		else if (criticalNum == 1) {
+        			GraphNode criticalityNode = new GraphNode(visualGraph, SWT.NONE, "Medium");
+        			criticalityNode.setBackgroundColor(criticalYellow);
+        		}
+        		
+        		else if (criticalNum == 0) {	          
+        			GraphNode criticalityNode = new GraphNode(visualGraph, SWT.NONE, "Non-Critical");
+        			criticalityNode.setBackgroundColor(criticalGreen);
+        		}
+        		else {	          
+        			GraphNode criticalityNode = new GraphNode(visualGraph, SWT.NONE, "Unknown");
+        		}
+        		
 
                 visualGraph.setLayoutAlgorithm(new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING), true);
-                // Selection listener on graphConnect or GraphNode is not supported
-                // see https://bugs.eclipse.org/bugs/show_bug.cgi?id=236528
                 visualGraph.addSelectionListener(new SelectionAdapter() {
                         @Override
                         public void widgetSelected(SelectionEvent e) {

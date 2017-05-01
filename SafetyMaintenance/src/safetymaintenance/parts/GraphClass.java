@@ -109,7 +109,7 @@ public class GraphClass {
 		}
 	}
 
-	private boolean isCritical(String src) {
+	public boolean isCritical(String src) {
 		ArrayList<String> requirements = edges.get(src);
 		for(String r : requirements) {
 			//System.out.println("Checking requirement: " + r);
