@@ -74,6 +74,9 @@ public class GraphView extends ViewPart {
         		ArrayList<String> requirements = graph.getRequirements(criticalClass);
         		Set<String> otherArtifacts = new HashSet<String>();
         		Map<String, GraphNode> otherArtifactNodes = new HashMap<String, GraphNode>();
+        		
+        		// Make criticality Node
+    			GraphNode criticalityNode = new GraphNode(visualGraph, SWT.NONE, "Unknown");
 
         		// Set class node
         		GraphNode classNode = new GraphNode(visualGraph, SWT.NONE, criticalClass);
@@ -174,26 +177,28 @@ public class GraphView extends ViewPart {
 	                
 	              
         		}
-        		if (criticalNum == 3) {     
-        			GraphNode criticalityNode = new GraphNode(visualGraph, SWT.NONE, "Critical");
+        		if (criticalNum == 3) {
+        			criticalityNode.setText("Critical");
+        			//GraphNode criticalityNode = new GraphNode(visualGraph, SWT.NONE, "Critical");
         			criticalityNode.setBackgroundColor(criticalRed);
         		}
             	else if (criticalNum == 2){
-        			GraphNode criticalityNode = new GraphNode(visualGraph, SWT.NONE, "Medium Critical");
+            		criticalityNode.setText("Medium Critical");
+        			//GraphNode criticalityNode = new GraphNode(visualGraph, SWT.NONE, "Medium Critical");
         			criticalityNode.setBackgroundColor(criticalOrange);
         		}
         		else if (criticalNum == 1) {
-        			GraphNode criticalityNode = new GraphNode(visualGraph, SWT.NONE, "Medium");
+        			criticalityNode.setText("Medium");
+        			//GraphNode criticalityNode = new GraphNode(visualGraph, SWT.NONE, "Medium");
         			criticalityNode.setBackgroundColor(criticalYellow);
         		}
         		
-        		else if (criticalNum == 0) {	          
-        			GraphNode criticalityNode = new GraphNode(visualGraph, SWT.NONE, "Non-Critical");
+        		else if (criticalNum == 0) {	
+        			criticalityNode.setText("Non-Critical");
+        			//GraphNode criticalityNode = new GraphNode(visualGraph, SWT.NONE, "Non-Critical");
         			criticalityNode.setBackgroundColor(criticalGreen);
         		}
-        		else {	          
-        			GraphNode criticalityNode = new GraphNode(visualGraph, SWT.NONE, "Unknown");
-        		}
+
         		
 
                 visualGraph.setLayoutAlgorithm(new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING), true);
