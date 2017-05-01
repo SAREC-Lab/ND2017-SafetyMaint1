@@ -89,10 +89,16 @@ public class GraphView extends ViewPart {
         		for (int i=0; i<requirements.size(); i++) {
 	        		// Set requirement node
         			String reqDescription = graph.getRequirementDescription(requirements.get(i));
-        		
-        			GraphNode requirementNode = new GraphNode(visualGraph, SWT.NONE, requirements.get(i));
-	        	    requirementNode.setBackgroundColor(reqColor);
-	                requirementNode.setHighlightColor(new Color(null,255,255,90));
+        			GraphNode requirementNode;
+        			if(otherArtifacts.contains(reqDescription)) {
+        				requirementNode = otherArtifactNodes.get(reqDescription);
+        			} else {
+	        			requirementNode = new GraphNode(visualGraph, SWT.NONE, requirements.get(i));
+		        	    requirementNode.setBackgroundColor(reqColor);
+		                requirementNode.setHighlightColor(new Color(null,255,255,90));
+		                otherArtifacts.add(reqDescription);
+		                otherArtifactNodes.put(reqDescription, requirementNode);
+        			}
 	                
 	                
 	                // Node hover
