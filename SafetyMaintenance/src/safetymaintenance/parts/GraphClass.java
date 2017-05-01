@@ -175,6 +175,11 @@ public class GraphClass {
 	public Set<String> getCriticalClasses() {
 		return criticalClasses;
 	}
+	
+	public Set<String> getClasses() {
+		return classes;
+	}
+
 
 	private void buildGraph() {
 		nodes = xmlReader.readNodes();

@@ -9,11 +9,15 @@ import java.util.Set;
 
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
+import org.eclipse.jdt.internal.ui.javaeditor.CompilationUnitEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ToolTip;
+import org.eclipse.ui.IPartListener;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.zest.core.widgets.Graph;
 import org.eclipse.zest.core.widgets.GraphConnection;
@@ -46,32 +50,98 @@ public class GraphView extends ViewPart {
 
         public static GraphClass graph = new GraphClass();
         
+        private String currentClass = "";
+        
         public void createVisualGraph() {
         	createPartControl(visualGraph);
         }
        
         
         public void createPartControl(Composite parent) {
-                // Graph will hold all other objects
-                visualGraph = new Graph(parent, SWT.NONE);
+        		drawGraph(parent);
+                PlatformUI.getWorkbench().getActiveWorkbenchWindow().getPartService().addPartListener(new IPartListener() {
+        			
+        			@Override
+        			public void partOpened(IWorkbenchPart part) {
+        				
+        				if(part instanceof CompilationUnitEditor){
+        					CompilationUnitEditor javaEditor = (CompilationUnitEditor) part;
+        					String classname = javaEditor.getTitle();
+        		
+        					//String file  = ((FileEditorInput) javaEditor.getEditorInput()).getFile().getRawLocation().toOSString();
+        					//safetyCriticalNotifier().highlighy(class);
+        					System.out.println("JAVA File opened: "+ classname +" @"+classname);
+        					currentClass = classname; // need to find full path
+        					drawGraph(parent);
+        				}
+        			}
+        			//FlightZoneException.java 
+        			
+					public void partActivated(IWorkbenchPart part) {
+						// TODO Auto-generated method stub
+						
+					}
 
-                int maxCritical = 0;
+
+					public void partBroughtToTop(IWorkbenchPart part) {
+						// TODO Auto-generated method stub
+						
+        				if(part instanceof CompilationUnitEditor){
+        					CompilationUnitEditor javaEditor = (CompilationUnitEditor) part;
+        					String classname = javaEditor.getTitle();
+        		
+        					//String file  = ((FileEditorInput) javaEditor.getEditorInput()).getFile().getRawLocation().toOSString();
+        					//safetyCriticalNotifier().highlighy(class);
+        					System.out.println("JAVA File opened: "+ classname +" @"+classname);
+        					currentClass = classname; // need to find full path
+        					drawGraph(parent);
+        				}
+					}
+
+				
+					public void partClosed(IWorkbenchPart part) {
+						// TODO Auto-generated method stub
+				
+					}
+
+	
+					public void partDeactivated(IWorkbenchPart part) {
+						// TODO Auto-generated method stub
+						
+					}
+
+        		}); 
+        }
+        
+          public void drawGraph(Composite parent) {
+        	  System.out.println("Drawing graph");
+        	  
+        	  if(visualGraph != null){
+               visualGraph.dispose();
+        	  }
+        	  visualGraph = new Graph(parent, SWT.NONE);
+                System.out.println("IN THIS CLASS " + currentClass);
+                Set<String> classes = graph.getClasses();
                 
-                // Get critical classses
-                for(String source: graph.getCriticalClasses()) {
-        			graph.traverseGraphFrom(source);
-        		}
-   
-                Set<String> cc = graph.getCriticalClasses();
-                Iterator<String> it = cc.iterator();
-                String criticalClass = null;
-                for (int i=0; i<10; i++) {
-                	criticalClass = it.next();
+                Iterator<String> it = classes.iterator();
+                Boolean found = false;
+                while(it.hasNext()) {
+                	String c = it.next();
+                	System.out.println("Comparing " + currentClass + " to " + c);
+                	if (c.contains(currentClass)) {
+                		System.out.println("FOUND IT" + c);
+                		currentClass = c;
+                		found = true;
+                		break;
+                	} 
                 }
-                //criticalClass = it.next();
-                
+                if (found == false) {
+                	System.out.println("Could not find");
+        			GraphNode unknownNode = new GraphNode(visualGraph, SWT.NONE, "No Trace Links for this Class");
+                }
+                else {
                 // Get requirements for specified critical class
-        		ArrayList<String> requirements = graph.getRequirements(criticalClass);
+        		ArrayList<String> requirements = graph.getRequirements(currentClass);
         		Set<String> otherArtifacts = new HashSet<String>();
         		Map<String, GraphNode> otherArtifactNodes = new HashMap<String, GraphNode>();
         		
@@ -79,7 +149,7 @@ public class GraphView extends ViewPart {
     			GraphNode criticalityNode = new GraphNode(visualGraph, SWT.NONE, "Unknown");
 
         		// Set class node
-        		GraphNode classNode = new GraphNode(visualGraph, SWT.NONE, criticalClass);
+        		GraphNode classNode = new GraphNode(visualGraph, SWT.NONE, currentClass);
         		classNode.setBackgroundColor(codeColor);
         		classNode.setHighlightColor(new Color(null, 255,255,90));
 
@@ -93,8 +163,7 @@ public class GraphView extends ViewPart {
         			GraphNode requirementNode = new GraphNode(visualGraph, SWT.NONE, requirements.get(i));
 	        	    requirementNode.setBackgroundColor(reqColor);
 	                requirementNode.setHighlightColor(new Color(null,255,255,90));
-	                
-	                
+
 	                // Node hover
 	                IFigure requirementHover = new Label(reqDescription);
 	        		requirementNode.setTooltip(requirementHover);
@@ -142,7 +211,6 @@ public class GraphView extends ViewPart {
 
 	               		// Set critical node
 	                	String criticality = graph.nodes.get(fmecas.get(k)).getCriticality();
-	                	System.out.println(criticality);
 	                	
 	            		if (criticality.equals("Critical")) {     
 	            			criticalNum = 3;
@@ -179,28 +247,22 @@ public class GraphView extends ViewPart {
         		}
         		if (criticalNum == 3) {
         			criticalityNode.setText("Critical");
-        			//GraphNode criticalityNode = new GraphNode(visualGraph, SWT.NONE, "Critical");
         			criticalityNode.setBackgroundColor(criticalRed);
         		}
             	else if (criticalNum == 2){
             		criticalityNode.setText("Medium Critical");
-        			//GraphNode criticalityNode = new GraphNode(visualGraph, SWT.NONE, "Medium Critical");
         			criticalityNode.setBackgroundColor(criticalOrange);
         		}
         		else if (criticalNum == 1) {
         			criticalityNode.setText("Medium");
-        			//GraphNode criticalityNode = new GraphNode(visualGraph, SWT.NONE, "Medium");
         			criticalityNode.setBackgroundColor(criticalYellow);
         		}
         		
         		else if (criticalNum == 0) {	
         			criticalityNode.setText("Non-Critical");
-        			//GraphNode criticalityNode = new GraphNode(visualGraph, SWT.NONE, "Non-Critical");
         			criticalityNode.setBackgroundColor(criticalGreen);
         		}
-
-        		
-
+          }
                 visualGraph.setLayoutAlgorithm(new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING), true);
                 visualGraph.addSelectionListener(new SelectionAdapter() {
                         @Override
@@ -210,7 +272,9 @@ public class GraphView extends ViewPart {
                         }
 
                 });
+                visualGraph.getParent().layout();
         }
+
         /**
          * Passing the focus request to the viewer's control.
          */
