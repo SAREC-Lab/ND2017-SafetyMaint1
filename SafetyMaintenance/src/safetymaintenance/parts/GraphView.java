@@ -96,6 +96,8 @@ public class GraphView extends ViewPart {
 		                	designNode = new GraphNode(visualGraph,SWT.NONE, designDecisions.get(j));
 		                	designNode.setBackgroundColor(desColor);
 		                	designNode.setHighlightColor(new Color(null,255,255,90));
+		                	otherArtifacts.add(desDescription);
+		                	otherArtifactNodes.put(desDescription, designNode);
 	        			}
 		                // Node hover
 		                IFigure designHover = new Label(desDescription);
