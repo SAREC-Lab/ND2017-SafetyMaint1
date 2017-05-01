@@ -11,7 +11,7 @@ import org.eclipse.zest.core.widgets.Graph;
 public class NodeInfoView extends ViewPart {
 	private Label label;
 	private Graph graph = GraphView.visualGraph;
-
+	private GraphClass graphClass = new GraphClass();
 	
 	
 	@Override
@@ -19,16 +19,20 @@ public class NodeInfoView extends ViewPart {
 		// TODO Auto-generated method stub
 		//label = new Label(parent, 0);
     	//label.setText("HEY");
-		
+    	label = new Label(parent, 0);
+
 		
 		graph.addSelectionListener(new SelectionAdapter() {
 
 			@Override
             public void widgetSelected(SelectionEvent e) {
-            	//System.out.println(e);
-            	//Text text = new Text(parent, SWT.BORDER);
-            	label = new Label(parent, 0);
-            	label.setText("HEY");
+				String id = e.item.toString().substring(16);
+				System.out.println(id);
+            	System.out.println(e);
+            	String rID = graphClass.getRequirementDescription(id);
+            	//System.out.println(rID);
+            	label.setText(rID);
+          
             }
     });
 	}

@@ -82,8 +82,7 @@ public class GraphView extends ViewPart {
 	        		
 	                new GraphConnection(visualGraph, SWT.NONE, classNode, requirementNode);
 	                for (int j=0; j<designDecisions.size(); j++) {
-	        			String desDescription = graph.getDesDescription(designDecisions.get(j));
-	        			System.out.println(designDecisions.get(j));
+	        			String desDescription = graph.getDesDescription(requirements.get(i), designDecisions.get(j));
 	        			
 	                	GraphNode designNode = new GraphNode(visualGraph,SWT.NONE, designDecisions.get(j));
 	                	designNode.setBackgroundColor(desColor);
@@ -95,16 +94,26 @@ public class GraphView extends ViewPart {
 	                	new GraphConnection(visualGraph, SWT.NONE, requirementNode, designNode);    
 	                }
 	                for (int k=0; k<fmecas.size(); k++) {
+	        			String fmecaDescription = graph.getFmecaDescription(requirements.get(i), fmecas.get(k));      
+	                	
 	                	GraphNode fmecaNode = new GraphNode(visualGraph,SWT.NONE, fmecas.get(k));
 	                	fmecaNode.setBackgroundColor(fmecaColor);
 	                	fmecaNode.setHighlightColor(new Color(null,255,255,90));
 	                	new GraphConnection(visualGraph, SWT.NONE, requirementNode, fmecaNode);
+	                	 // Node hover
+		                IFigure fmecaHover = new Label(fmecaDescription);
+		        		fmecaNode.setTooltip(fmecaHover);
 	                }
 	                for (int l=0; l<assumptions.size(); l++) {
+	        			String assumpDescription = graph.getAssumpDescription(requirements.get(i), assumptions.get(l));      
+	                	
 	                	GraphNode assumptionNode = new GraphNode(visualGraph,SWT.NONE, assumptions.get(l));
 	                	assumptionNode.setBackgroundColor(assumptColor);
 	                	assumptionNode.setHighlightColor(new Color(null,255,255,90));
 	                	new GraphConnection(visualGraph, SWT.NONE, requirementNode, assumptionNode);
+	                	 // Node hover
+		                IFigure assumpHover = new Label(assumpDescription);
+		        		assumptionNode.setTooltip(assumpHover);
 	                }
         		}
                 

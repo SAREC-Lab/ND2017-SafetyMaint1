@@ -67,15 +67,30 @@ public class GraphClass {
 		return "No Description";
 	}
 	
-	public String getDesDescription(String id) {
-		if(!edges.containsKey(id)) return "No Description";
-		for(String link: edges.get(id)) {
-			if (nodes.get(link) != null) return nodes.get(link).toString();
+	public String getDesDescription(String rID, String dID) {
+		if(!edges.containsKey(rID)) return "No Description";
+		for(String link: edges.get(rID)) {
+			if (link == dID) return (dID +": " + nodes.get(link).getDescription());
 		}
 		return "No Description";
-		
 	}
 
+	public String getAssumpDescription(String rID, String aID) {
+		if(!edges.containsKey(rID)) return "No Description";
+		for(String link: edges.get(rID)) {
+			if (link == aID) return (aID +": " + nodes.get(link).getDescription());
+		}
+		return "No Description";
+	}
+	
+	public String getFmecaDescription(String rID, String fID) {
+		if(!edges.containsKey(rID)) return "No Description";
+		for(String link: edges.get(rID)) {
+			if (link == fID) return (fID +": "+ nodes.get(link).getDescription());
+		}
+		return "No Description";
+	}
+	
 	public void readNodes() {
 		for(String id: nodes.keySet()) {
 			System.out.println(nodes.get(id).toString());
@@ -127,7 +142,6 @@ public class GraphClass {
 	
 	public ArrayList<String> getFMECA(String requirement) {
 		ArrayList<String> FMECA = new ArrayList<String>();
-			//if (!edges.containsKey(requirement)) continue;
 			if (edges.get(requirement) != null) {
 				for (String f:edges.get(requirement)) {
 					if (f.contains("F")) {
