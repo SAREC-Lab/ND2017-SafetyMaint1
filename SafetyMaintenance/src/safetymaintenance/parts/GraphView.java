@@ -107,25 +107,39 @@ public class GraphView extends ViewPart {
 	                }
 	                for (int k=0; k<fmecas.size(); k++) {
 	        			String fmecaDescription = graph.getFmecaDescription(requirements.get(i), fmecas.get(k));      
-	                	
-	                	GraphNode fmecaNode = new GraphNode(visualGraph,SWT.NONE, fmecas.get(k));
-	                	fmecaNode.setBackgroundColor(fmecaColor);
-	                	fmecaNode.setHighlightColor(new Color(null,255,255,90));
-	                	new GraphConnection(visualGraph, SWT.NONE, requirementNode, fmecaNode);
+	                	GraphNode fmecaNode;
+	                	if(otherArtifacts.contains(fmecaDescription)) {
+	                		fmecaNode = otherArtifactNodes.get(fmecaDescription);
+	                	} else {
+		                	fmecaNode = new GraphNode(visualGraph,SWT.NONE, fmecas.get(k));
+		                	fmecaNode.setBackgroundColor(fmecaColor);
+		                	fmecaNode.setHighlightColor(new Color(null,255,255,90));
+		                	otherArtifacts.add(fmecaDescription);
+		                	otherArtifactNodes.put(fmecaDescription, fmecaNode);
+	                	}
 	                	 // Node hover
 		                IFigure fmecaHover = new Label(fmecaDescription);
 		        		fmecaNode.setTooltip(fmecaHover);
+	                	new GraphConnection(visualGraph, SWT.NONE, requirementNode, fmecaNode);
+
 	                }
 	                for (int l=0; l<assumptions.size(); l++) {
-	        			String assumpDescription = graph.getAssumpDescription(requirements.get(i), assumptions.get(l));      
-	                	
-	                	GraphNode assumptionNode = new GraphNode(visualGraph,SWT.NONE, assumptions.get(l));
-	                	assumptionNode.setBackgroundColor(assumptColor);
-	                	assumptionNode.setHighlightColor(new Color(null,255,255,90));
-	                	new GraphConnection(visualGraph, SWT.NONE, requirementNode, assumptionNode);
+	        			String assumpDescription = graph.getAssumpDescription(requirements.get(i), assumptions.get(l)); 
+	        			GraphNode assumptionNode;
+	                	if(otherArtifacts.contains(assumpDescription)) {
+	                		assumptionNode = otherArtifactNodes.get(assumpDescription);
+	                	} else {
+	        				assumptionNode = new GraphNode(visualGraph,SWT.NONE, assumptions.get(l));
+	        				assumptionNode.setBackgroundColor(assumptColor);
+	        				assumptionNode.setHighlightColor(new Color(null,255,255,90));
+	        				otherArtifacts.add(assumpDescription);
+	        				otherArtifactNodes.put(assumpDescription, assumptionNode);
+	                	}
 	                	 // Node hover
 		                IFigure assumpHover = new Label(assumpDescription);
 		        		assumptionNode.setTooltip(assumpHover);
+	                	new GraphConnection(visualGraph, SWT.NONE, requirementNode, assumptionNode);
+
 	                }
         		}
                 
