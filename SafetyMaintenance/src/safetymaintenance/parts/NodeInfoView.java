@@ -27,8 +27,8 @@ public class NodeInfoView extends ViewPart {
 			@Override
             public void widgetSelected(SelectionEvent e) {
 				String id = e.item.toString().substring(16);
-				System.out.println(id);
-            	System.out.println(e);
+				//System.out.println(id);
+            	//System.out.println(e);
             	String rID = graphClass.getRequirementDescription(id);
             	//System.out.println(rID);
             	label.setText(rID);
