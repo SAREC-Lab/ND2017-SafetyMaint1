@@ -1,7 +1,10 @@
 package safetymaintenance.parts;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.draw2d.IFigure;
@@ -57,6 +60,8 @@ public class GraphView extends ViewPart {
                 
                 // Get requirements for specified critical class
         		ArrayList<String> requirements = graph.getRequirements(criticalClass);
+        		Set<String> otherArtifacts = new HashSet<String>();
+        		Map<String, GraphNode> otherArtifactNodes = new HashMap<String, GraphNode>();
         		
         		// Set class node
         		GraphNode classNode = new GraphNode(visualGraph, SWT.NONE, criticalClass);
@@ -72,6 +77,7 @@ public class GraphView extends ViewPart {
 	        	    requirementNode.setBackgroundColor(reqColor);
 	                requirementNode.setHighlightColor(new Color(null,255,255,90));
 	                
+	                
 	                // Node hover
 	                IFigure requirementHover = new Label(reqDescription);
 	        		requirementNode.setTooltip(requirementHover);
@@ -83,10 +89,14 @@ public class GraphView extends ViewPart {
 	                new GraphConnection(visualGraph, SWT.NONE, classNode, requirementNode);
 	                for (int j=0; j<designDecisions.size(); j++) {
 	        			String desDescription = graph.getDesDescription(requirements.get(i), designDecisions.get(j));
-	        			
-	                	GraphNode designNode = new GraphNode(visualGraph,SWT.NONE, designDecisions.get(j));
-	                	designNode.setBackgroundColor(desColor);
-	                	designNode.setHighlightColor(new Color(null,255,255,90));
+	        			GraphNode designNode;
+	        			if(otherArtifacts.contains(desDescription)) {
+	        				designNode = otherArtifactNodes.get(desDescription);
+	        			} else {
+		                	designNode = new GraphNode(visualGraph,SWT.NONE, designDecisions.get(j));
+		                	designNode.setBackgroundColor(desColor);
+		                	designNode.setHighlightColor(new Color(null,255,255,90));
+	        			}
 		                // Node hover
 		                IFigure designHover = new Label(desDescription);
 		        		designNode.setTooltip(designHover);
