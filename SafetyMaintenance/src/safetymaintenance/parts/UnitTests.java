@@ -12,6 +12,23 @@ import org.junit.Test;
 public class UnitTests {
 
 	@Test
+	public void myNodeUnitTest() {
+		try {
+			
+			myNode node = new myNode("FMECA", "F1", "Insufficient voltage. Drone lands prematurely and is unable to return to base.", "Critical");
+			
+			assertEquals(node.getType(), "FMECA");
+			assertEquals(node.getID(), "F1");
+			assertEquals(node.getDescription(), "Insufficient voltage. Drone lands prematurely and is unable to return to base.");
+			assertEquals(node.getCriticality(), "Critical");
+			
+		}  catch (Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	
+	@Test
 	public void ReadXMLFileUnitTest() {
 		try {
 			XMLReader xmlReader = new XMLReader();
