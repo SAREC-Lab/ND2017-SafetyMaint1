@@ -120,16 +120,13 @@ public class GraphView extends ViewPart {
                visualGraph.dispose();
         	  }
         	  visualGraph = new Graph(parent, SWT.NONE);
-                System.out.println("IN THIS CLASS " + currentClass);
                 Set<String> classes = graph.getClasses();
                 
                 Iterator<String> it = classes.iterator();
                 Boolean found = false;
                 while(it.hasNext()) {
                 	String c = it.next();
-                	System.out.println("Comparing " + currentClass + " to " + c);
                 	if (c.contains(currentClass)) {
-                		System.out.println("FOUND IT" + c);
                 		currentClass = c;
                 		found = true;
                 		break;
@@ -159,13 +156,8 @@ public class GraphView extends ViewPart {
         		for (int i=0; i<requirements.size(); i++) {
 	        		// Set requirement node
         			String reqDescription = graph.getRequirementDescription(requirements.get(i));
-<<<<<<< HEAD
-        		
-        			GraphNode requirementNode = new GraphNode(visualGraph, SWT.NONE, requirements.get(i));
-	        	    requirementNode.setBackgroundColor(reqColor);
-	                requirementNode.setHighlightColor(new Color(null,255,255,90));
 
-=======
+        		
         			GraphNode requirementNode;
         			if(otherArtifacts.contains(reqDescription)) {
         				requirementNode = otherArtifactNodes.get(reqDescription);
@@ -178,7 +170,7 @@ public class GraphView extends ViewPart {
         			}
 	                
 	                
->>>>>>> branch 'master' of https://github.com/SAREC-Lab/ND2017-SafetyMaint1.git
+
 	                // Node hover
 	                IFigure requirementHover = new Label(reqDescription);
 	        		requirementNode.setTooltip(requirementHover);

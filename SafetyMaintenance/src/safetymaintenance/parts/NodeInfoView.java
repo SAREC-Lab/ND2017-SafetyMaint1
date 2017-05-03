@@ -62,7 +62,6 @@ public class NodeInfoView extends ViewPart {
 		if (label == null) {
 			label = new Label(parent, 0);
 		}
-		System.out.println("BACK AGAIN");
 
 		// Selection event for node clicks
 		graph.addSelectionListener(new SelectionAdapter() {
